@@ -23,56 +23,55 @@ import { openExternalLink } from '../utils/platform';
  * VideoCard 组件 - 瀑布流中的视频卡片
  * 默认显示封面图（或视频首帧），hover 时自动播放视频
  */
-const VideoCard = React.memo(({ videoUrl, imageUrl, alt }) => {
+const VideoCard = React.memo(({ videoUrl, imageUrl, alt, isDarkMode, rootRef }) => {
   const [isHovered, setIsHovered] = useState(false);
   const videoRef = useRef(null);
   const { displaySrc: resolvedVideo, failed: videoBroken } = useResolvedFolderMediaSrc(videoUrl || '');
   const videoPlaySrc = videoBroken ? '' : resolvedVideo;
 
-  const handleMouseEnter = useCallback(() => {
-    setIsHovered(true);
-    const vid = videoRef.current;
-    if (vid) {
-      vid.currentTime = 0;
-      vid.play().catch(() => {});
-    }
-  }, []);
+  const handleMouseEnter = useCallback(() => setIsHovered(true), []);
+  const handleMouseLeave = useCallback(() => setIsHovered(false), []);
 
-  const handleMouseLeave = useCallback(() => {
-    setIsHovered(false);
+  useEffect(() => {
+    if (!isHovered) return;
     const vid = videoRef.current;
-    if (vid) {
-      vid.pause();
-      vid.currentTime = 0;
-    }
-  }, []);
+    if (!vid) return;
+    vid.currentTime = 0;
+    vid.play().catch(() => {});
+  }, [isHovered]);
 
   return (
     <div
-      className="relative w-full"
+      className="relative w-full overflow-hidden"
+      style={imageUrl ? undefined : { aspectRatio: '16 / 9' }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* 封面图层 - hover 时淡出 */}
       {imageUrl && (
         <OptimizedImage
           src={imageUrl}
           alt={alt}
-          className={`w-full h-auto object-cover transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-100'}`}
+          className={`transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-100'}`}
           referrerPolicy="no-referrer"
-          priority={5}
+          priority={10}
+          aspectRatio="3 / 4"
+          isDarkMode={isDarkMode}
+          rootRef={rootRef}
         />
       )}
-      {/* 视频层 - 始终存在，hover 时显示 */}
-      <video
-        ref={videoRef}
-        src={videoPlaySrc || ''}
-        className={`w-full h-auto object-cover ${imageUrl ? 'absolute inset-0 w-full h-full' : ''} transition-opacity duration-300 ${imageUrl && !isHovered ? 'opacity-0' : 'opacity-100'}`}
-        muted
-        playsInline
-        preload="metadata"
-        loop
-      />
+      {/* 仅在 hover 时挂上 src，避免首屏把所有视频文件都拉下来 */}
+      {isHovered && videoPlaySrc && (
+        <video
+          ref={videoRef}
+          src={videoPlaySrc}
+          className="absolute inset-0 w-full h-full object-cover"
+          muted
+          playsInline
+          preload="metadata"
+          loop
+          autoPlay
+        />
+      )}
     </div>
   );
 });
@@ -123,43 +122,44 @@ export const DiscoveryView = React.memo(({
     availableTags,
   }) => {
     const { isTagSidebarVisible } = useRootContext();
-    const [columnCount, setColumnCount] = useState(1);
-    const [columnGap, setColumnGap] = useState(4);
-    const [isMobileTagsExpanded, setIsMobileTagsExpanded] = useState(false); // 手机端顶栏标签行默认折叠
-  
-    useEffect(() => {
-      const getColumnInfo = () => {
-        const width = window.innerWidth;
-        const isVideoType = selectedType === 'video';
-        
-        if (masonryStyleKey === 'poster') {
-          // 视频类型下桌面端改为 2 列，避免横屏视频太小
-          const count = width >= 1280 ? (isVideoType ? 2 : 3) : (width >= 640 ? 2 : 1);
-          return { count, gap: 4 };
-        } else if (masonryStyleKey === 'classic' || masonryStyleKey === 'minimal') {
-          // 视频类型下桌面端也限制在 2 列
-          const count = width >= 1280 ? (isVideoType ? 2 : 4) : (width >= 1024 ? (isVideoType ? 2 : 3) : (width >= 640 ? 2 : 1));
-          return { count, gap: 4 };
-        } else if (masonryStyleKey === 'compact') {
-          // 视频类型下桌面端也限制在 2 列
-          const count = width >= 1280 ? (isVideoType ? 2 : 5) : (width >= 1024 ? (isVideoType ? 2 : 4) : (width >= 640 ? (isVideoType ? 2 : 3) : 2));
-          return { count, gap: 4 };
-        } else if (masonryStyleKey === 'list') {
-          return { count: 1, gap: 4 };
-        }
+
+    const getColumnInfo = useCallback((widthOverride) => {
+      const width = widthOverride ?? (typeof window !== 'undefined' ? window.innerWidth : 1024);
+      const isVideoType = selectedType === 'video';
+
+      if (masonryStyleKey === 'poster') {
+        const count = width >= 1280 ? (isVideoType ? 2 : 3) : (width >= 640 ? 2 : 1);
+        return { count, gap: 4 };
+      }
+      if (masonryStyleKey === 'classic' || masonryStyleKey === 'minimal') {
+        const count = width >= 1280 ? (isVideoType ? 2 : 4) : (width >= 1024 ? (isVideoType ? 2 : 3) : (width >= 640 ? 2 : 1));
+        return { count, gap: 4 };
+      }
+      if (masonryStyleKey === 'compact') {
+        const count = width >= 1280 ? (isVideoType ? 2 : 5) : (width >= 1024 ? (isVideoType ? 2 : 4) : (width >= 640 ? (isVideoType ? 2 : 3) : 2));
+        return { count, gap: 4 };
+      }
+      if (masonryStyleKey === 'list') {
         return { count: 1, gap: 4 };
-      };
-  
+      }
+      return { count: 1, gap: 4 };
+    }, [masonryStyleKey, selectedType]);
+
+    const [columnCount, setColumnCount] = useState(() => getColumnInfo().count);
+    const [columnGap, setColumnGap] = useState(() => getColumnInfo().gap);
+    const [isMobileTagsExpanded, setIsMobileTagsExpanded] = useState(false);
+
+    useEffect(() => {
       const handleResize = () => {
         const info = getColumnInfo();
         setColumnCount(info.count);
         setColumnGap(info.gap);
       };
-  
+
       handleResize();
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
-    }, [masonryStyleKey, selectedType]);
+    }, [getColumnInfo]);
   
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
@@ -268,8 +268,10 @@ export const DiscoveryView = React.memo(({
 
         {/* 图像展示区域（两列瀑布流） */}
         <div className="flex flex-col w-full px-2 py-4 gap-4">
-          <section className="columns-2 gap-1">
-            {filteredTemplates.map(t_item => (
+          <section className="flex w-full gap-1">
+            {[0, 1].map(colIndex => (
+              <div key={colIndex} className="flex-1 min-w-0 flex flex-col gap-1">
+                {filteredTemplates.filter((_, index) => index % 2 === colIndex).map(t_item => (
               <article
                 key={t_item.id}
                 onClick={() => {
@@ -282,27 +284,28 @@ export const DiscoveryView = React.memo(({
                     setDiscoveryView(false);
                   }
                 }}
-                className={`break-inside-avoid mb-[4px] w-full rounded-lg overflow-hidden shadow-sm border active:scale-[0.98] transition-all ${isDarkMode ? 'bg-[#2A2726] border-white/5' : 'bg-white border-gray-100'}`}
+                className={`w-full rounded-lg overflow-hidden shadow-sm border active:scale-[0.98] transition-all ${isDarkMode ? 'bg-[#2A2726] border-white/5' : 'bg-white border-gray-100'}`}
               >
-                {/* min-h-px：避免 img 未解码前高度为 0 时与懒加载/Intersection 叠加导致永不拉取 */}
-                <div className="relative w-full min-h-px bg-gray-50/5">
+                <div className={`relative w-full overflow-hidden ${isDarkMode ? 'bg-[#2A2726]' : 'bg-gray-100'}`}>
                   {t_item.imageUrl ? (
                     <OptimizedImage
                       src={t_item.imageUrl}
                       alt={getLocalized(t_item.name, language)}
-                      className="w-full h-auto block"
+                      className="w-full"
                       referrerPolicy="no-referrer"
                       priority={10}
+                      aspectRatio="3 / 4"
                       isDarkMode={isDarkMode}
                     />
                   ) : t_item.type === 'video' && t_item.videoUrl ? (
                     <MobileVideoFirstFrame
                       videoUrl={t_item.videoUrl}
                       alt={getLocalized(t_item.name, language)}
-                      className="w-full h-auto block"
+                      className="w-full"
+                      aspectRatio="16 / 9"
                     />
                   ) : (
-                    <div className="w-full aspect-[4/3] flex items-center justify-center text-gray-300">
+                    <div className="w-full aspect-[3/4] flex items-center justify-center text-gray-300">
                       <ImageIcon size={48} strokeWidth={1} />
                     </div>
                   )}
@@ -320,6 +323,8 @@ export const DiscoveryView = React.memo(({
                   </div>
                 </div>
               </article>
+                ))}
+              </div>
             ))}
           </section>
         </div>
@@ -396,7 +401,7 @@ export const DiscoveryView = React.memo(({
                   <div className="h-full w-full py-4 lg:py-6 px-2 lg:px-4">
                       <div className={`flex w-full ${masonryStyleKey === 'list' ? 'flex-col' : ''}`} style={{ gap: `${columnGap}px` }}>
                           {Array.from({ length: columnCount }).map((_, colIndex) => (
-                              <div key={colIndex} className="flex-1 flex flex-col" style={{ gap: `${columnGap}px` }}>
+                              <div key={colIndex} className="flex-1 min-w-0 flex flex-col" style={{ gap: `${columnGap}px` }}>
                                   {filteredTemplates
                                       .filter((_, index) => index % columnCount === colIndex)
                                       .map(t_item => (
@@ -412,26 +417,30 @@ export const DiscoveryView = React.memo(({
                                                       setDiscoveryView(false);
                                                   }
                                               }}
-                                              className={`cursor-pointer group transition-shadow duration-300 relative overflow-hidden rounded-xl isolate hover:shadow-[0_0_15px_rgba(251,146,60,0.35)] will-change-transform`}
+                                              className={`cursor-pointer group transition-shadow duration-300 relative overflow-hidden rounded-xl isolate hover:shadow-[0_0_15px_rgba(251,146,60,0.35)] will-change-transform w-full`}
                                           >
-                                              <div className={`relative w-full min-h-px overflow-hidden rounded-lg ${isDarkMode ? 'bg-[#2A2726]' : 'bg-gray-100'}`} style={{ transform: 'translateZ(0)' }}>
+                                              <div className={`relative w-full overflow-hidden rounded-lg ${isDarkMode ? 'bg-[#2A2726]' : 'bg-gray-100'}`} style={{ transform: 'translateZ(0)' }}>
                                                   {t_item.type === 'video' && t_item.videoUrl ? (
                                                       <VideoCard
                                                           videoUrl={t_item.videoUrl}
                                                           imageUrl={t_item.imageUrl}
                                                           alt={getLocalized(t_item.name, language)}
+                                                          isDarkMode={isDarkMode}
+                                                          rootRef={posterScrollRef}
                                                       />
                                                   ) : t_item.imageUrl ? (
                                                       <OptimizedImage
                                                           src={t_item.imageUrl} 
                                                           alt={getLocalized(t_item.name, language)} 
-                                                          className="w-full h-auto object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                                                          className="transition-transform duration-500 ease-out group-hover:scale-110"
                                                           referrerPolicy="no-referrer"
                                                           priority={15}
+                                                          aspectRatio="3 / 4"
                                                           isDarkMode={isDarkMode}
+                                                          rootRef={posterScrollRef}
                                                       />
                                                   ) : (
-                                                  <div className="w-full aspect-[3/4] bg-gray-100/5 flex items-center justify-center text-gray-300">
+                                                  <div className="w-full aspect-[3/4] flex items-center justify-center text-gray-300">
                                                       <ImageIcon size={32} />
                                                   </div>
                                               )}

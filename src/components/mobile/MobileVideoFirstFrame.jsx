@@ -1,17 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useResolvedFolderMediaSrc } from '../../context/FolderStorageContext';
 
 /**
  * 移动端专用：当视频模板没有 imageUrl 时，用视频第一帧作为预览图。
- * 仅在 DiscoveryView 手机端瀑布流中使用，不影响桌面端。
+ * 仅在进入视口后再拉取视频，避免瀑布流首屏把所有视频都请求一遍。
  */
-export const MobileVideoFirstFrame = React.memo(({ videoUrl, alt, className = '' }) => {
+export const MobileVideoFirstFrame = React.memo(({
+  videoUrl,
+  alt,
+  className = '',
+  aspectRatio = '16 / 9',
+}) => {
   const { displaySrc: resolvedVideo, failed: resolveFailed, loading: resolveLoading } = useResolvedFolderMediaSrc(videoUrl || '');
   const [posterDataUrl, setPosterDataUrl] = useState(null);
   const [failed, setFailed] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    if (!resolvedVideo || resolveLoading || resolveFailed || typeof document === 'undefined') return;
+    if (shouldLoad) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '160px', threshold: 0 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [shouldLoad]);
+
+  useEffect(() => {
+    if (!shouldLoad || !resolvedVideo || resolveLoading || resolveFailed || typeof document === 'undefined') return;
 
     const video = document.createElement('video');
     video.muted = true;
@@ -22,7 +48,6 @@ export const MobileVideoFirstFrame = React.memo(({ videoUrl, alt, className = ''
     video.setAttribute('webkit-playsinline', '');
 
     const onLoadedData = () => {
-      // 取 0.1 秒处作为首帧（避免全黑）
       video.currentTime = 0.1;
     };
 
@@ -60,28 +85,31 @@ export const MobileVideoFirstFrame = React.memo(({ videoUrl, alt, className = ''
       video.src = '';
       video.load();
     };
-  }, [resolvedVideo, resolveLoading, resolveFailed]);
+  }, [shouldLoad, resolvedVideo, resolveLoading, resolveFailed]);
 
-  // 成功截到首帧：显示图片
   if (posterDataUrl) {
     return (
-      <img
-        src={posterDataUrl}
-        alt={alt}
-        className={className}
-        loading="lazy"
-        decoding="async"
-      />
+      <div ref={containerRef} className="relative w-full overflow-hidden">
+        <img
+          src={posterDataUrl}
+          alt={alt}
+          className={`w-full h-auto block ${className}`}
+          decoding="async"
+        />
+      </div>
     );
   }
 
-  // 加载中或失败：显示占位（保持 4:3 比例，避免布局跳动）
   return (
-    <div className={`w-full bg-gray-200/50 flex items-center justify-center ${className}`} style={{ aspectRatio: '4/3', minHeight: 80 }}>
+    <div
+      ref={containerRef}
+      className={`w-full bg-gray-200/50 flex items-center justify-center image-placeholder-breathe ${className}`}
+      style={{ aspectRatio }}
+    >
       {failed || resolveFailed ? (
         <span className="text-[10px] text-gray-400">预览不可用</span>
       ) : (
-        <div className="w-6 h-6 border-2 border-gray-300 border-t-orange-400 rounded-full animate-spin" />
+        <span className="image-placeholder-label text-black">loading</span>
       )}
     </div>
   );

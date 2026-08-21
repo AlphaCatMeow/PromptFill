@@ -1,13 +1,9 @@
 import React from 'react';
-
-const VIDEO_FEATURE_ENABLED = import.meta.env.VITE_VIDEO_ENABLED === 'true';
 import { Link, useLocation } from 'react-router-dom';
 import { AppStoreIcon } from './icons/AppStoreIcon';
-import { FlaskIcon } from './icons/FlaskIcon';
 import { GithubIcon } from './icons/GithubIcon';
 import { HomeIcon } from './icons/HomeIcon';
 import { ListIcon } from './icons/ListIcon';
-import { VideoIcon } from './icons/VideoIcon';
 import { OrderIcon } from './icons/OrderIcon';
 import { RefreshIcon } from './icons/RefreshIcon';
 import { TranslateIcon } from './icons/TranslateIcon';
@@ -80,7 +76,10 @@ export const Sidebar = ({
         <div className="flex flex-col items-center gap-4">
           <Tooltip content="主页" isDarkMode={isDarkMode}>
             <Link
-              to="/explore"
+              to={{ pathname: '/explore', search: location.search }}
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent('app-nav-home'));
+              }}
               className={`p-2 group transition-colors block ${activeTab === 'home' ? (isDarkMode ? 'text-[#FB923C]' : 'text-[#EA580C]') : (isDarkMode ? 'text-[#8E9196]' : 'text-[#6B7280]')} hover:text-[#F97316]`}
             >
               <HomeIcon size={24} />
@@ -95,28 +94,6 @@ export const Sidebar = ({
               <ListIcon size={24} />
             </Link>
           </Tooltip>
-
-          {VIDEO_FEATURE_ENABLED && (
-            <Tooltip content="视频编辑" isDarkMode={isDarkMode}>
-              <Link
-                to="/video"
-                className={`p-2 group transition-colors block ${location?.pathname?.startsWith('/video') ? (isDarkMode ? 'text-[#FB923C]' : 'text-[#EA580C]') : (isDarkMode ? 'text-[#8E9196]' : 'text-[#6B7280]')} hover:text-[#F97316]`}
-              >
-                <VideoIcon size={24} />
-              </Link>
-            </Tooltip>
-          )}
-
-          {import.meta.env.DEV && (
-            <Tooltip content="UI Test" isDarkMode={isDarkMode}>
-              <Link
-                to="/ui-test"
-                className={`p-2 group transition-colors block ${location?.pathname === '/ui-test' ? (isDarkMode ? 'text-[#FB923C]' : 'text-[#EA580C]') : (isDarkMode ? 'text-[#8E9196]' : 'text-[#6B7280]')} hover:text-[#F97316]`}
-              >
-                <FlaskIcon size={24} />
-              </Link>
-            </Tooltip>
-          )}
           
           <div className="relative">
             <Tooltip content={t('sort')} isDarkMode={isDarkMode}>

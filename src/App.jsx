@@ -52,12 +52,12 @@ const App = () => {
   const location = useLocation();
   const isSettingPage = location.pathname === '/setting';
 
-  const { isDarkMode, language, t, themeMode, setThemeMode, setLanguage, isTagSidebarVisible, isTemplatesSidebarVisible, isBanksSidebarVisible } = useRootContext();
+  const { isDarkMode, language, t, themeMode, setThemeMode, setLanguage, isTagSidebarVisible, isTemplatesSidebarVisible, isBanksSidebarVisible, setTemplateCount } = useRootContext();
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   // 当前应用代码版本 (必须与 package.json 和 version.json 一致)
-  const APP_VERSION = "1.1.3";
+  const APP_VERSION = "1.1.4";
 
   // 临时功能：瀑布流样式管理
   const [masonryStyleKey, setMasonryStyleKey] = useState('poster');
@@ -103,6 +103,11 @@ const App = () => {
     const systemTemplateIds = new Set(INITIAL_TEMPLATES_CONFIG.map(t => t.id));
     return templates.filter(t => !systemTemplateIds.has(t.id));
   }, [templates]);
+
+  useEffect(() => {
+    if (!isTemplatesLoaded) return;
+    setTemplateCount(Array.isArray(templates) ? templates.length : 0);
+  }, [templates, isTemplatesLoaded, setTemplateCount]);
   
   const [lastAppliedDataVersion, setLastAppliedDataVersion] = useStickyState("", "app_data_version_v1");
 
@@ -367,6 +372,13 @@ const App = () => {
       setMobileTab('editor');
     }
   }, [isMobileDevice, mobileTab, location.pathname, searchParams, navigate]);
+
+  // 详情页点 Home 时，即使 URL 已是 /explore（视图状态不同步），也强制回到发现页
+  useEffect(() => {
+    const onNavHome = () => handleSetDiscoveryView(true);
+    window.addEventListener('app-nav-home', onNavHome);
+    return () => window.removeEventListener('app-nav-home', onNavHome);
+  }, [handleSetDiscoveryView]);
 
   const [isPosterAutoScrollPaused, setIsPosterAutoScrollPaused] = useState(false);
   const posterScrollRef = useRef(null);
@@ -934,7 +946,7 @@ const App = () => {
     activeTemplate,
     setTemplates,
     setActiveTemplateId,
-    setDiscoveryView,
+    handleSetDiscoveryView,
     isMobileDevice,
     setMobileTab,
     language,
@@ -998,15 +1010,15 @@ const App = () => {
       // 图片模板：直接创建并跳转到编辑页
       performAddTemplate(type);
       setIsAddTemplateTypeModalOpen(false);
-      setDiscoveryView(false);
+      handleSetDiscoveryView(false);
     }
-  }, [performAddTemplate]);
+  }, [performAddTemplate, handleSetDiscoveryView]);
 
   const onConfirmVideoSubType = React.useCallback((subType) => {
     performAddTemplate('video', subType);
     setIsVideoSubTypeModalOpen(false);
-    setDiscoveryView(false);
-  }, [performAddTemplate]);
+    handleSetDiscoveryView(false);
+  }, [performAddTemplate, handleSetDiscoveryView]);
 
   const requestDeleteTemplate = React.useCallback((id, e) => {
     if (e) e.stopPropagation();
@@ -4245,7 +4257,7 @@ ${tagsHint ? `\n${tagsHint}` : ''}
         TAG_STYLES={TAG_STYLES}
         displayTag={displayTag}
         setActiveTemplateId={handleSetActiveTemplateId}
-        setDiscoveryView={setDiscoveryView}
+        setDiscoveryView={handleSetDiscoveryView}
         setZoomedImage={setZoomedImage}
         setMobileTab={setMobileTab}
         handleRefreshSystemData={handleRefreshSystemData}

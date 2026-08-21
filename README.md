@@ -11,8 +11,8 @@
 A **structured prompt generation tool** designed specifically for AI painting (GPT, Midjourney, Nano Banana, etc.). Help users quickly build, manage, and iterate complex prompts through a visual "fill-in-the-blank" interaction.
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Version](https://img.shields.io/badge/Version-1.1.3-orange.svg)
-![Data](https://img.shields.io/badge/Data-1.1.3-green.svg)
+![Version](https://img.shields.io/badge/Version-1.1.4-orange.svg)
+![Data](https://img.shields.io/badge/Data-1.2.1-green.svg)
 ![React](https://img.shields.io/badge/React-18.x-61DAFB.svg)
 ![Vite](https://img.shields.io/badge/Vite-5.x-646CFF.svg)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC.svg)
@@ -22,7 +22,7 @@ A **structured prompt generation tool** designed specifically for AI painting (G
 
 ## 📝 Foreword
 
-Prompt Fill has officially reached **v1.1.3**. The original intention of this project is to solve the problem of hard-to-remember, hard-to-manage, and tedious modification of prompts in the AI painting process. By structuring prompts, creation becomes as simple as "filling in the blanks".
+Prompt Fill has officially reached **v1.1.4**. The original intention of this project is to solve the problem of hard-to-remember, hard-to-manage, and tedious modification of prompts in the AI painting process. By structuring prompts, creation becomes as simple as "filling in the blanks".
 
 ### 🌟 Progress & Core Features
 
@@ -195,6 +195,13 @@ Copy the final prompt or save as a long image. JSON Import/Export is available f
 
 ## 📝 Change Log
 
+### Version 1.1.4 (2026-08-21)
+- Visual Memory templates: Mid-century Surreal Editorial Cover, Visual Memory Editorial Page, Exhibition Ticket, Vinyl Album.
+- Discovery masonry now lazy-loads images with locked placeholders to reduce first-load jank.
+- Footer shows total template count (official + user).
+- Fix: Home no longer stays on `/explore` after entering a template from preview.
+- Removed the standalone video editor, knowledge articles, and UI Test page (video templates remain).
+
 ### Version 1.1.3 (2026-04-21)
 - Template Library Expansion: Added 10 new official templates — Museum Infographic, Nine-Grid Designers, Four-Panel Fictional Ads, Neo-Chinese City Poster, Textbook Poem Page, App Iconfont Set, Dual-IP Collab Postcard, Neo-Chinese Gacha Card Set, Retro Skeuomorphic Icons, Lifestyle App UI.
 - Platform Support Update: Copy modal now includes ChatGPT (chatgpt.com). New best model options: GPT-image-2, Midjourney niji 7, Midjourney v8.1, Nano Banana 2.
@@ -313,8 +320,8 @@ MIT License / [MIT 许可证](LICENSE).
 一个专为 AI 绘画（GPT、Nano Banana 等）设计的**结构化提示词生成工具**。通过可视化的"填空"交互方式，帮助用户快速构建、管理和迭代复杂的 Prompt。
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Version](https://img.shields.io/badge/Version-1.1.3-orange.svg)
-![Data](https://img.shields.io/badge/Data-1.1.3-green.svg)
+![Version](https://img.shields.io/badge/Version-1.1.4-orange.svg)
+![Data](https://img.shields.io/badge/Data-1.2.1-green.svg)
 ![React](https://img.shields.io/badge/React-18.x-61DAFB.svg)
 ![Vite](https://img.shields.io/badge/Vite-5.x-646CFF.svg)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC.svg)
@@ -324,7 +331,7 @@ MIT License / [MIT 许可证](LICENSE).
 
 ## 📝 写在前面
 
-Prompt Fill 正式发布 **v1.1.3** 版本。本项目初衷是解决 AI 绘画过程中提示词难记忆、难管理、修改繁琐的问题。通过将 Prompt 结构化，让创作变得像"填空"一样简单。
+Prompt Fill 正式发布 **v1.1.4** 版本。本项目初衷是解决 AI 绘画过程中提示词难记忆、难管理、修改繁琐的问题。通过将 Prompt 结构化，让创作变得像"填空"一样简单。
 
 ### 🌟 目前进度与核心功能
 
@@ -496,6 +503,13 @@ Prompt Fill 正式发布 **v1.1.3** 版本。本项目初衷是解决 AI 绘画�
 ---
 
 ## 📝 更新日志
+
+### Version 1.1.4 (2026-08-21)
+- 影像转译模版：Mid-century 超现实编辑封面、影像转译·编辑书页、影像转译·展览票、影像转译·黑胶专辑。
+- 发现页瀑布流改为按需加载图片，占位比例锁定，减少首屏卡顿。
+- 右下角显示当前模版总数（官方 + 用户）。
+- 修复从预览进入模版后，首页按钮无法返回发现页的问题。
+- 下线独立视频编辑器、知识库文章与 UI Test 页面（视频模版仍保留）。
 
 ### Version 1.1.3 (2026-04-21)
 - 模版库大扩充：新增 10 套官方模版——博物馆图鉴信息图、九宫格设计师图鉴、四格虚构广告、新中式城市海报、语文课本古诗页、App 图标集、双 IP 联名明信片、国潮集换卡、复古拟物图标、生活类 App UI。

@@ -131,7 +131,7 @@ export const TemplateCarousel = ({ templates, language, isDarkMode, setZoomedIma
           referrerPolicy="no-referrer"
           draggable={false}
           isDarkMode={isDarkMode}
-          priority={5}
+          priority={1}
         />
 
         {/* Video Indicator for Carousel */}

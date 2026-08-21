@@ -3401,6 +3401,358 @@ export const INITIAL_BANKS = {
         en: "golden-hour side backlight with long shadows, cinematic teal-orange split while retaining analog grain"
       }
     ]
+  },
+
+  editorial_cover_theme: {
+    label: { cn: "封面主题", en: "Cover Theme" },
+    category: "other",
+    options: [
+      { cn: "前端部署工程师", en: "Front-end Deployment Engineer" },
+      { cn: "提示词工程师", en: "Prompt Engineer" },
+      { cn: "独立开发者", en: "Indie Developer" },
+      { cn: "AI 产品经理", en: "AI Product Manager" },
+      { cn: "远程办公", en: "Remote Work" },
+      { cn: "知识库", en: "Knowledge Base" },
+      { cn: "数字游民", en: "Digital Nomad" },
+      { cn: "开源维护者", en: "Open Source Maintainer" },
+      { cn: "数据隐私", en: "Data Privacy" },
+      { cn: "创作者经济", en: "Creator Economy" },
+      { cn: "算法推荐", en: "Algorithmic Feeds" },
+      { cn: "屏幕疲劳", en: "Screen Fatigue" },
+      { cn: "代码审查", en: "Code Review" },
+      { cn: "侧边项目", en: "Side Project" }
+    ]
+  },
+
+  editorial_cover_subtitle: {
+    label: { cn: "封面副标题", en: "Cover Subtitle" },
+    category: "other",
+    options: [
+      { cn: "自动判断（可留空）", en: "Auto (leave empty if unneeded)" },
+      { cn: "从零开始，掌握核心技能", en: "From zero, master the core skills" },
+      { cn: "人在用科技做什么", en: "What people do with technology" },
+      { cn: "一次时代错位", en: "One anachronism" },
+      { cn: "从想法到上线", en: "From idea to launch" },
+      { cn: "属于今天的独立杂志", en: "An independent magazine of today" },
+      { cn: "把抽象变成可触碰的事", en: "Make the abstract tangible" },
+      { cn: "今天才会发生的话题", en: "A topic that could only happen today" }
+    ]
+  },
+
+  editorial_cover_ratio: {
+    label: { cn: "封面画幅", en: "Cover Ratio" },
+    category: "visual",
+    options: [
+      { cn: "自动", en: "Auto" },
+      { cn: "3:4", en: "3:4" },
+      { cn: "4:5", en: "4:5" },
+      { cn: "9:16", en: "9:16" },
+      { cn: "1:1", en: "1:1" },
+      { cn: "16:9", en: "16:9" },
+      { cn: "5:2", en: "5:2" },
+      { cn: "3:1", en: "3:1" }
+    ]
+  },
+
+  editorial_cover_cast: {
+    label: { cn: "人物设定", en: "Cast" },
+    category: "character",
+    options: [
+      { cn: "自动判断", en: "Auto" },
+      { cn: "女性", en: "Female" },
+      { cn: "男性", en: "Male" },
+      { cn: "一男一女", en: "One woman and one man" },
+      { cn: "双女性", en: "Two women" },
+      { cn: "双男性", en: "Two men" },
+      { cn: "工程师", en: "Engineer" },
+      { cn: "编辑 / 学者", en: "Editor / Scholar" },
+      { cn: "工作搭档", en: "Work partners" },
+      { cn: "三人以内小群像", en: "Small group of three or fewer" }
+    ]
+  },
+
+  editorial_cover_emotion: {
+    label: { cn: "情感倾向", en: "Emotional Tone" },
+    category: "visual",
+    options: [
+      { cn: "自动判断", en: "Auto" },
+      { cn: "温暖", en: "Warm" },
+      { cn: "治愈", en: "Healing" },
+      { cn: "理性", en: "Rational" },
+      { cn: "克制", en: "Restrained" },
+      { cn: "浪漫", en: "Romantic" },
+      { cn: "神秘", en: "Mysterious" },
+      { cn: "怪诞", en: "Uncanny" },
+      { cn: "冷峻", en: "Austere" },
+      { cn: "幽默", en: "Humorous" },
+      { cn: "戏剧化", en: "Dramatic" }
+    ]
+  },
+
+  memory_core: {
+    label: { cn: "记忆核心", en: "Memory Core" },
+    category: "visual",
+    options: [
+      { cn: "自动判断", en: "Auto" },
+      { cn: "自动提炼物件、人物关系、动作、空间或光线", en: "Auto-extract objects, relations, action, space, or light" },
+      { cn: "窗边暮色", en: "Dusk by the window" },
+      { cn: "室内与窗外的冷暖交界", en: "Warm interior meeting cool outdoor light" },
+      { cn: "桌面上的生活痕迹", en: "Traces of life on the table" },
+      { cn: "独处时的光线", en: "Light in a moment of solitude" },
+      { cn: "物件与空间的距离", en: "Distance between objects and space" },
+      { cn: "天气渗进室内", en: "Weather seeping indoors" },
+      { cn: "人物未在场的生活现场", en: "A lived scene with no one present" },
+      { cn: "旅途中的片刻停顿", en: "A pause on the road" }
+    ]
+  },
+
+  preserved_elements: {
+    label: { cn: "重点保留", en: "Preserved Elements" },
+    category: "visual",
+    options: [
+      { cn: "主要物件、空间结构与色彩关系", en: "Key objects, spatial structure, and color relationships" },
+      { cn: "窗框、桌面与窗外景色", en: "Window frame, tabletop, and the view outside" },
+      { cn: "前景物件与背景光线", en: "Foreground objects and background light" },
+      { cn: "家具布局与强调色", en: "Furniture layout and the accent color" },
+      { cn: "人物轮廓与环境色温", en: "Figure silhouette and environmental color temperature" },
+      { cn: "冷色窗外与暖色室内", en: "Cool exterior against a warm interior" },
+      { cn: "植物、桌面与建筑轮廓", en: "Plant, tabletop, and architectural outline" }
+    ]
+  },
+
+  abstraction_level: {
+    label: { cn: "抽象程度", en: "Abstraction Level" },
+    category: "visual",
+    options: [
+      { cn: "高度抽象但关系可辨", en: "Highly abstract, relationships still readable" },
+      { cn: "中度抽象，主体仍然清晰", en: "Moderate abstraction, subject still clear" },
+      { cn: "高度抽象，仅保留动作与关系", en: "High abstraction, keep only action and relations" },
+      { cn: "极度抽象，只留下色彩与空间节奏", en: "Extreme abstraction, only color and spatial rhythm remain" },
+      { cn: "局部抽象，人物比环境更清晰", en: "Partial abstraction, figure clearer than environment" },
+      { cn: "局部抽象，环境比人物更清晰", en: "Partial abstraction, environment clearer than figure" }
+    ]
+  },
+
+  block_language: {
+    label: { cn: "色块语言", en: "Block Language" },
+    category: "visual",
+    options: [
+      { cn: "柔和大色域与少量锐利几何切面", en: "Soft large color fields with a few sharp geometric cuts" },
+      { cn: "柔和、圆润、相互覆盖的有机色块", en: "Soft, rounded, overlapping organic blocks" },
+      { cn: "大面积平涂色块与锐利几何切面", en: "Large flat fields with sharp geometric facets" },
+      { cn: "具有纸张撕裂边缘的不规则色块", en: "Irregular blocks with torn-paper edges" },
+      { cn: "半透明色层与轻微套印错位", en: "Translucent layers with slight print misregistration" },
+      { cn: "极少量巨大色块与细小视觉锚点", en: "A few huge blocks with tiny visual anchors" },
+      { cn: "流动色域与突然中断的硬边", en: "Flowing fields interrupted by sudden hard edges" },
+      { cn: "类似丝网印刷的有限色块", en: "Limited blocks like screen printing" },
+      { cn: "类似剪纸拼贴的扁平色块", en: "Flat blocks like paper-cut collage" }
+    ]
+  },
+
+  color_strategy: {
+    label: { cn: "色彩策略", en: "Color Strategy" },
+    category: "visual",
+    options: [
+      { cn: "从原图提取2–4种低饱和主色，并保留一个鲜明强调色", en: "Pull 2–4 low-saturation primaries from the photo, keep one vivid accent" },
+      { cn: "从原图提取2–4种低饱和专色", en: "Extract 2–4 low-saturation spot colors from the photo" },
+      { cn: "从原图提取2–4种主色并降低饱和度", en: "Extract 2–4 main colors from the photo and desaturate them" },
+      { cn: "保留原图冷暖关系，减少中间色", en: "Keep the photo's warm/cool split, reduce midtones" },
+      { cn: "单色体系加一个高饱和强调色", en: "A monochrome system plus one high-saturation accent" },
+      { cn: "两组互补色形成视觉张力", en: "Two complementary pairs for visual tension" },
+      { cn: "使用偏灰的大地色与少量亮色", en: "Grayed earth tones with a little bright color" },
+      { cn: "将原图转换成低饱和复古印刷色", en: "Convert the photo into low-saturation vintage print colors" },
+      { cn: "保留最鲜明的服装颜色，其余转为中性色", en: "Keep the strongest garment color, turn the rest neutral" },
+      { cn: "根据照片情绪重新组织色彩，但不改变冷暖基调", en: "Reorganize color by mood without changing the warm/cool key" }
+    ]
+  },
+
+  aspect_ratio: {
+    label: { cn: "输出比例", en: "Aspect Ratio" },
+    category: "visual",
+    options: [
+      { cn: "3:4", en: "3:4" },
+      { cn: "4:5", en: "4:5" },
+      { cn: "9:16", en: "9:16" },
+      { cn: "1:1", en: "1:1" },
+      { cn: "2:3", en: "2:3" },
+      { cn: "4:3", en: "4:3" }
+    ]
+  },
+
+  main_text: {
+    label: { cn: "主文字", en: "Main Text" },
+    category: "other",
+    options: [
+      { cn: "根据原图内容生成2–6字的简约短语", en: "Generate a 2–6 character spare phrase from the photo" },
+      { cn: "窗边", en: "Windowside" },
+      { cn: "暮色", en: "Dusk" },
+      { cn: "室内", en: "Indoors" },
+      { cn: "停顿", en: "Pause" },
+      { cn: "留白", en: "Whitespace" },
+      { cn: "不写主文字", en: "No main text" }
+    ]
+  },
+
+  supporting_text: {
+    label: { cn: "辅助文字", en: "Supporting Text" },
+    category: "other",
+    options: [
+      { cn: "根据画面生成一句克制、具体的记忆描述，也可以省略", en: "A restrained, specific memory line from the picture, or omit" },
+      { cn: "蓝色落进室内", en: "Blue falls indoors" },
+      { cn: "光线停在桌面上", en: "Light rests on the table" },
+      { cn: "窗外还未完全天黑", en: "Outside is not fully dark yet" },
+      { cn: "省略辅助文字", en: "Omit supporting text" }
+    ]
+  },
+
+  text_language: {
+    label: { cn: "文字语言", en: "Text Language" },
+    category: "other",
+    options: [
+      { cn: "跟随用户使用的语言", en: "Follow the user's language" },
+      { cn: "优先英文；若图像具有明确地域语言，则使用对应语言", en: "English first; use a regional language if the image clearly belongs to one" },
+      { cn: "中文", en: "Chinese" },
+      { cn: "英文", en: "English" },
+      { cn: "中英对照", en: "Chinese and English" }
+    ]
+  },
+
+  display_mode: {
+    label: { cn: "呈现方式", en: "Display Mode" },
+    category: "visual",
+    options: [
+      { cn: "原图在上，抽象色块转译在下", en: "Photo on top, abstract translation below" },
+      { cn: "抽象作品为主体，原图以胶带固定在角落", en: "Abstract as the main work, photo taped in a corner" },
+      { cn: "只展示抽象转译结果", en: "Show only the abstract translation" },
+      { cn: "原图与转译结果左右对照", en: "Photo and translation side by side" },
+      { cn: "原图作为小型档案缩略图嵌入留白区", en: "Photo as a small archival thumbnail in the white space" },
+      { cn: "抽象色块局部越过边界，与原图发生连接", en: "Abstract blocks cross the boundary and meet the photo" }
+    ]
+  },
+
+  exhibition_theme: {
+    label: { cn: "展览主题", en: "Exhibition Theme" },
+    category: "other",
+    options: [
+      { cn: "根据照片生成2–8字的含蓄主题", en: "A 2–8 character understated theme from the photo" },
+      { cn: "静置的声音", en: "Sound at rest" },
+      { cn: "窗边", en: "Windowside" },
+      { cn: "未完成的傍晚", en: "An unfinished evening" },
+      { cn: "墙上的乐器", en: "Instruments on the wall" },
+      { cn: "室内光线", en: "Indoor light" },
+      { cn: "停放的日常", en: "Daily life at rest" },
+      { cn: "负形记忆", en: "Negative-space memory" }
+    ]
+  },
+
+  description: {
+    label: { cn: "说明文字", en: "Caption" },
+    category: "other",
+    options: [
+      { cn: "根据画面真实内容生成一句简短描述", en: "One short caption from what the picture actually shows" },
+      { cn: "弦乐器、百叶窗与傍晚光线", en: "String instruments, blinds, and evening light" },
+      { cn: "窗框、桌面与窗外景色", en: "Window frame, tabletop, and the view outside" },
+      { cn: "物件停在原处", en: "Objects left where they were" },
+      { cn: "墙上的轮廓与前景的暗部", en: "Wall silhouettes and a dark foreground" },
+      { cn: "省略说明文字", en: "Omit the caption" }
+    ]
+  },
+
+  translation_mode: {
+    label: { cn: "转译方式", en: "Translation Mode" },
+    category: "visual",
+    options: [
+      { cn: "抽象重制", en: "Abstract remake" },
+      { cn: "剪影重组", en: "Silhouette recomposition" },
+      { cn: "专色套印", en: "Spot-color overprint" },
+      { cn: "几何切片", en: "Geometric slices" },
+      { cn: "负形与缺失", en: "Negative space and omission" },
+      { cn: "排线与网点", en: "Hatching and halftone" },
+      { cn: "比例放大局部", en: "Scaled-up fragments" },
+      { cn: "概念化重绘", en: "Conceptual redraw" }
+    ]
+  },
+
+  translation_focus: {
+    label: { cn: "转译重点", en: "Translation Focus" },
+    category: "visual",
+    options: [
+      { cn: "自动选择3–5个最具识别度的元素", en: "Auto-select 3–5 of the most recognizable elements" },
+      { cn: "轮廓、方向与色彩", en: "Contour, direction, and color" },
+      { cn: "物件剪影与空间节奏", en: "Object silhouettes and spatial rhythm" },
+      { cn: "材质、比例与负形", en: "Material, proportion, and negative space" },
+      { cn: "光线方向与主色块", en: "Light direction and main color fields" },
+      { cn: "前景暗部与墙上物件", en: "Foreground darks and objects on the wall" }
+    ]
+  },
+
+  serial_code: {
+    label: { cn: "抽象编号", en: "Serial Code" },
+    category: "other",
+    options: [
+      { cn: "NO. 02", en: "NO. 02" },
+      { cn: "NO. 01", en: "NO. 01" },
+      { cn: "NO. 03", en: "NO. 03" },
+      { cn: "NO. 07", en: "NO. 07" },
+      { cn: "NO. 11", en: "NO. 11" },
+      { cn: "ARCHIVE 04", en: "ARCHIVE 04" },
+      { cn: "不显示编号", en: "No serial" }
+    ]
+  },
+
+  album_title: {
+    label: { cn: "专辑名称", en: "Album Title" },
+    category: "other",
+    options: [
+      { cn: "根据图像核心生成2–5个英文单词", en: "2–5 English words from the image’s core" },
+      { cn: "VERMILION RAIN", en: "VERMILION RAIN" },
+      { cn: "FOREST STUDY", en: "FOREST STUDY" },
+      { cn: "BLUE HOUR", en: "BLUE HOUR" },
+      { cn: "WINDOW LIGHT", en: "WINDOW LIGHT" },
+      { cn: "STATIC SOUND", en: "STATIC SOUND" },
+      { cn: "EVENING ROOM", en: "EVENING ROOM" }
+    ]
+  },
+
+  album_note: {
+    label: { cn: "注释文字", en: "Album Note" },
+    category: "other",
+    options: [
+      { cn: "根据画面生成一句简短英文描述", en: "One short English line from the picture" },
+      { cn: "雨の鳥居", en: "雨の鳥居" },
+      { cn: "FOREST STUDY 01", en: "FOREST STUDY 01" },
+      { cn: "Rain on vermilion timber", en: "Rain on vermilion timber" },
+      { cn: "Indoor light at rest", en: "Indoor light at rest" },
+      { cn: "省略注释", en: "Omit the note" }
+    ]
+  },
+
+  catalog_code: {
+    label: { cn: "目录编号", en: "Catalog Code" },
+    category: "other",
+    options: [
+      { cn: "自动生成简洁的虚构编号", en: "Auto-generate a short fictional catalog code" },
+      { cn: "FOREST STUDY 01", en: "FOREST STUDY 01" },
+      { cn: "ARC-02", en: "ARC-02" },
+      { cn: "CAT 1973", en: "CAT 1973" },
+      { cn: "SIDE A / 01", en: "SIDE A / 01" },
+      { cn: "VM-04", en: "VM-04" },
+      { cn: "不显示编号", en: "No catalog code" }
+    ]
+  },
+
+  cover_style: {
+    label: { cn: "封面风格", en: "Cover Style" },
+    category: "visual",
+    options: [
+      { cn: "70年代现代主义专辑设计", en: "1970s modernist album design" },
+      { cn: "丝网印刷专色几何", en: "Screen-print spot-color geometry" },
+      { cn: "摄影拼贴与局部剪影", en: "Photo collage with partial silhouettes" },
+      { cn: "瑞士国际主义排版", en: "Swiss international typography" },
+      { cn: "日本现代主义海报", en: "Japanese modernist poster" },
+      { cn: "光学折射与叠印", en: "Optical refraction and overprint" },
+      { cn: "极简单色加强调色", en: "Minimal monochrome plus one accent" }
+    ]
   }
 };
 
@@ -3699,6 +4051,30 @@ export const INITIAL_DEFAULTS = {
   street_film_photography: {
     cn: "90年代经典街拍质感，FujiFilm 胶片感：细腻颗粒、略褪色与柔和对比，阴天漫射自然光",
     en: "1990s classic street-snap feel with Fujifilm texture—fine grain, gentle fade, soft contrast, diffused overcast daylight"
-  }
+  },
+  editorial_cover_theme: { cn: "前端部署工程师", en: "Front-end Deployment Engineer" },
+  editorial_cover_subtitle: { cn: "从零开始，掌握核心技能", en: "From zero, master the core skills" },
+  editorial_cover_ratio: { cn: "3:4", en: "3:4" },
+  editorial_cover_cast: { cn: "男性", en: "Male" },
+  editorial_cover_emotion: { cn: "理性", en: "Rational" },
+  memory_core: { cn: "自动判断", en: "Auto" },
+  preserved_elements: { cn: "主要物件、空间结构与色彩关系", en: "Key objects, spatial structure, and color relationships" },
+  abstraction_level: { cn: "高度抽象但关系可辨", en: "Highly abstract, relationships still readable" },
+  block_language: { cn: "柔和大色域与少量锐利几何切面", en: "Soft large color fields with a few sharp geometric cuts" },
+  color_strategy: { cn: "从原图提取2–4种低饱和主色，并保留一个鲜明强调色", en: "Pull 2–4 low-saturation primaries from the photo, keep one vivid accent" },
+  aspect_ratio: { cn: "3:4", en: "3:4" },
+  main_text: { cn: "根据原图内容生成2–6字的简约短语", en: "Generate a 2–6 character spare phrase from the photo" },
+  supporting_text: { cn: "根据画面生成一句克制、具体的记忆描述，也可以省略", en: "A restrained, specific memory line from the picture, or omit" },
+  text_language: { cn: "跟随用户使用的语言", en: "Follow the user's language" },
+  display_mode: { cn: "原图在上，抽象色块转译在下", en: "Photo on top, abstract translation below" },
+  exhibition_theme: { cn: "根据照片生成2–8字的含蓄主题", en: "A 2–8 character understated theme from the photo" },
+  description: { cn: "根据画面真实内容生成一句简短描述", en: "One short caption from what the picture actually shows" },
+  translation_mode: { cn: "抽象重制", en: "Abstract remake" },
+  translation_focus: { cn: "自动选择3–5个最具识别度的元素", en: "Auto-select 3–5 of the most recognizable elements" },
+  serial_code: { cn: "NO. 02", en: "NO. 02" },
+  album_title: { cn: "根据图像核心生成2–5个英文单词", en: "2–5 English words from the image’s core" },
+  album_note: { cn: "根据画面生成一句简短英文描述", en: "One short English line from the picture" },
+  catalog_code: { cn: "自动生成简洁的虚构编号", en: "Auto-generate a short fictional catalog code" },
+  cover_style: { cn: "70年代现代主义专辑设计", en: "1970s modernist album design" }
 };
 

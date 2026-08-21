@@ -58,6 +58,8 @@ const PanelToggleButton = ({ isVisible, onClick, icon: Icon, tooltip, isDarkMode
 export const AppFooter = ({ appVersion, isDarkMode: isDarkModeProp }) => {
   const {
     isDarkMode: isDarkModeCtx,
+    t,
+    templateCount,
     isTagSidebarVisible,
     setIsTagSidebarVisible,
     isTemplatesSidebarVisible,
@@ -104,6 +106,12 @@ export const AppFooter = ({ appVersion, isDarkMode: isDarkModeProp }) => {
           isDarkMode ? 'text-gray-400' : 'text-gray-600'
         }`}
       >
+        {typeof templateCount === 'number' && (
+          <>
+            <span>{t('template_count', { count: templateCount })}</span>
+            <span className={`w-1 h-1 rounded-full ${isDarkMode ? 'bg-gray-600' : 'bg-gray-400'}`} />
+          </>
+        )}
         {appVersion && (
           <>
             <span className={`font-mono ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>

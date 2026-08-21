@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useLayoutEffect, useRef, useCallback, memo } from 'react';
-import { loadImage } from '../utils/imageLoader';
 import { useResolvedFolderMediaSrc } from '../context/FolderStorageContext';
 
 /**
- * OptimizedImage - 优化的图片加载组件
+ * OptimizedImage - 可见区域才请求真实 URL。
  *
- * 注意：不在此组件上使用原生 loading="lazy"。
- * 在瀑布流 / columns 等布局中，未加载完成的 img 高度常为 0，
- * 浏览器会认为懒加载目标不可见从而永不请求，导致一直 opacity-0（白屏）。
- * 并发由 imageLoader 预取队列控制；首屏外图片仍可由父级布局预留 min-height 辅助可见性。
+ * 瀑布流必须传入 aspectRatio：加载前按该比例占位，避免高度为 0 时
+ * 所有卡片挤进视口、浏览器一次性请求全部图片。
+ * 图片解码完成后取消锁定，按原始宽高显示，不再裁切。
+ * 其它场景（灯箱、编辑器）不传 aspectRatio，保持原有 img 布局。
+ *
+ * priority <= 2：立即加载。不要再用 new Image() 预热，否则会双倍请求。
  */
 const OptimizedImage = memo(({
   src,
@@ -16,27 +17,48 @@ const OptimizedImage = memo(({
   className = '',
   style = {},
   priority = 10,
-  rootMargin = '200px',
+  rootMargin = '160px',
+  rootRef = null,
+  aspectRatio,
   onLoad,
   onError,
   referrerPolicy = 'no-referrer',
   isDarkMode = false,
-  /** 显式开启原生懒加载（仅当父级已保证占位高度时使用，如固定高度容器） */
-  nativeLazy = false,
+  nativeLazy: _nativeLazy = false,
   ...props
 }) => {
   const { displaySrc, failed: folderFailed, loading: folderLoading } = useResolvedFolderMediaSrc(src);
+  const eager = priority <= 2;
+  const [shouldLoad, setShouldLoad] = useState(eager);
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const hasTriggeredLoad = useRef(false);
+  const containerRef = useRef(null);
   const imgRef = useRef(null);
 
   const effectiveSrc = displaySrc;
+  const placeholderBg = isDarkMode ? '#2A2726' : '#e5e7eb';
+  const placeholderLabelClass = isDarkMode ? 'text-white' : 'text-black';
 
-  // src 变化时重置；并在布局阶段检测「缓存已瞬时解码」避免错过 onLoad（普通刷新常见）
+  const PlaceholderMark = (
+    <span className={`image-placeholder-label ${placeholderLabelClass}`}>loading</span>
+  );
+
+  const PlaceholderFill = (
+    <>
+      <div
+        className="absolute inset-0 pointer-events-none image-placeholder-breathe"
+        style={{ backgroundColor: placeholderBg }}
+        aria-hidden
+      />
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        {PlaceholderMark}
+      </div>
+    </>
+  );
+
   useLayoutEffect(() => {
-    hasTriggeredLoad.current = false;
     setHasError(false);
+    setShouldLoad(eager);
     if (!effectiveSrc || folderFailed || folderLoading) {
       setIsLoaded(false);
       return;
@@ -47,29 +69,30 @@ const OptimizedImage = memo(({
     } else {
       setIsLoaded(false);
     }
-  }, [effectiveSrc, folderFailed, folderLoading]);
+  }, [effectiveSrc, folderFailed, folderLoading, eager]);
 
-  // 使用 IntersectionObserver 触发队列加载（预热缓存）
   useEffect(() => {
-    if (!effectiveSrc || folderFailed || folderLoading || hasTriggeredLoad.current) return;
+    if (!effectiveSrc || folderFailed || folderLoading || shouldLoad) return;
+    const el = containerRef.current;
+    if (!el) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !hasTriggeredLoad.current) {
-          hasTriggeredLoad.current = true;
-          loadImage(effectiveSrc, priority).catch(() => {});
+        if (entries[0]?.isIntersecting) {
+          setShouldLoad(true);
           observer.disconnect();
         }
       },
-      { rootMargin, threshold: 0.01 }
+      {
+        root: rootRef?.current ?? null,
+        rootMargin,
+        threshold: 0,
+      }
     );
 
-    if (imgRef.current) {
-      observer.observe(imgRef.current);
-    }
-
+    observer.observe(el);
     return () => observer.disconnect();
-  }, [effectiveSrc, priority, rootMargin, folderFailed, folderLoading]);
+  }, [effectiveSrc, shouldLoad, rootMargin, rootRef, folderFailed, folderLoading]);
 
   const handleLoad = useCallback(() => {
     setIsLoaded(true);
@@ -85,36 +108,82 @@ const OptimizedImage = memo(({
   if (folderFailed || (hasError && effectiveSrc)) {
     return (
       <div
-        className={`${className} flex items-center justify-center bg-gray-200 text-gray-400 text-[10px] select-none`}
-        style={style}
+        className={`${className} flex items-center justify-center text-gray-400 text-[10px] select-none`}
+        style={{
+          ...style,
+          ...(aspectRatio ? { aspectRatio } : null),
+          backgroundColor: placeholderBg,
+        }}
         role="img"
         aria-label={alt || 'Image unavailable'}
-        {...props}
       >
-        {isDarkMode ? '—' : '—'}
+        —
       </div>
     );
   }
 
-  if (folderLoading && !effectiveSrc) {
+  if ((folderLoading && !effectiveSrc) || !effectiveSrc) {
     return (
       <div
-        ref={imgRef}
-        className={`${className} bg-gray-200 dark:bg-gray-700 animate-pulse`}
-        style={style}
+        ref={containerRef}
+        className={`${className} relative flex items-center justify-center overflow-hidden`}
+        style={{
+          ...style,
+          ...(aspectRatio ? { aspectRatio } : null),
+          backgroundColor: placeholderBg,
+        }}
         aria-hidden
-        {...props}
-      />
+      >
+        <div className="absolute inset-0 image-placeholder-breathe" style={{ backgroundColor: placeholderBg }} />
+        {PlaceholderMark}
+      </div>
     );
   }
 
-  if (!effectiveSrc) {
+  if (aspectRatio) {
     return (
       <div
-        className={`${className} flex items-center justify-center bg-gray-100 text-gray-300`}
-        style={style}
-        {...props}
-      />
+        ref={containerRef}
+        className="relative w-full overflow-hidden block"
+        style={{
+          aspectRatio: isLoaded ? undefined : aspectRatio,
+          backgroundColor: !isLoaded ? placeholderBg : undefined,
+        }}
+      >
+        {!isLoaded && PlaceholderFill}
+        {shouldLoad ? (
+          <img
+            ref={imgRef}
+            src={effectiveSrc}
+            alt={alt}
+            className={`${className} transition-opacity duration-300 ${
+              isLoaded
+                ? 'relative w-full opacity-100'
+                : 'absolute inset-0 w-full h-full object-cover opacity-0'
+            }`}
+            style={isLoaded ? { height: 'auto' } : undefined}
+            onLoad={handleLoad}
+            onError={handleError}
+            referrerPolicy={referrerPolicy}
+            loading={eager ? 'eager' : 'lazy'}
+            decoding="async"
+            {...props}
+          />
+        ) : null}
+      </div>
+    );
+  }
+
+  if (!shouldLoad) {
+    return (
+      <div
+        ref={containerRef}
+        className={`${className} relative flex items-center justify-center overflow-hidden`}
+        style={{ ...style, backgroundColor: placeholderBg }}
+        aria-hidden
+      >
+        {PlaceholderFill}
+      </div>
     );
   }
 
@@ -123,19 +192,15 @@ const OptimizedImage = memo(({
       ref={imgRef}
       src={effectiveSrc}
       alt={alt}
-      className={`${className} transition-opacity duration-300 ${
-        isLoaded ? 'opacity-100' : 'opacity-0'
-      }`}
+      className={`${className} transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
       style={{
         ...style,
-        backgroundColor: !isLoaded && !hasError 
-          ? (isDarkMode ? '#374151' : '#e5e7eb') 
-          : undefined,
+        backgroundColor: !isLoaded ? placeholderBg : undefined,
       }}
       onLoad={handleLoad}
       onError={handleError}
       referrerPolicy={referrerPolicy}
-      loading={nativeLazy ? 'lazy' : 'eager'}
+      loading={eager ? 'eager' : 'lazy'}
       decoding="async"
       {...props}
     />

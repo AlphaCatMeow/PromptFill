@@ -24,7 +24,6 @@ export const RootLayout = ({ children }) => {
 
   // 直接由路径计算激活 tab，无需额外 state
   const activeTab = (() => {
-    if (location.pathname.startsWith('/video')) return 'video';
     if (location.pathname === '/setting') return 'settings';
     if (location.pathname === '/detail') return 'detail';
     return 'home'; // /explore 及其他

@@ -856,3 +856,34 @@ body {
               linear-gradient(0deg, #646464 0%, rgba(0, 0, 0, 0) 100%) border-box;
   box-shadow: inset 0px 2px 4px 0px rgba(0, 0, 0, 0.3);
 }
+
+/* 瀑布流图片占位：浅呼吸 + loading 字 */
+@keyframes image-placeholder-breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.58; }
+}
+
+@keyframes image-placeholder-label {
+  0%, 100% { opacity: 0.32; }
+  50% { opacity: 0.1; }
+}
+
+.image-placeholder-breathe {
+  animation: image-placeholder-breathe 2.8s ease-in-out infinite;
+}
+
+.image-placeholder-label {
+  animation: image-placeholder-label 2.8s ease-in-out infinite;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: lowercase;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-placeholder-breathe,
+  .image-placeholder-label {
+    animation: none;
+  }
+}

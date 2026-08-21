@@ -40,7 +40,7 @@
 /**
  * 模板系统版本号，每次更新 templates.js 或 banks.js 时请更新此版本号
  */
-export const SYSTEM_DATA_VERSION = "1.2.0";
+export const SYSTEM_DATA_VERSION = "1.2.1";
 
 /**
  * 分享功能正式环境域名（扫码导入需使用公网可访问地址）
@@ -419,6 +419,198 @@ export const TEMPLATE_MIRROR_SELFIE_CHIBI_CLONES = {
 export const TEMPLATE_LEGO_LANDMARK_STREET_FILM = {
   cn: `创作一张极具创意的图片：一张经典建筑的街拍图，模拟行人在街上拍摄的建筑照片，但要具备建筑可视化的构图与美感。形成反差的是，主体建筑由巨大的乐高块构建而成——就像经典乐高颗粒以与真实世界相融的尺度巨兽化存在，凸点与拼缝清晰可读。核心建筑为「{{iconic_architecture}}」。拍摄风格：{{street_film_photography}}。`,
   en: `Create a highly creative image: a street photograph of a classic landmark, as if a passerby shot it from the sidewalk, yet keep the disciplined composition and formal beauty of architectural visualization. The twist: the entire landmark is built from life-scaled LEGO bricks—giant studs and interlocking seams at real-world proportions, reading as a plausible civic volume. Core building: {{iconic_architecture}}. Photographic treatment: {{street_film_photography}}.`
+};
+
+export const TEMPLATE_MIDCENTURY_EDITORIAL_COVER = {
+  cn: `你是一名顶级杂志封面艺术总监、视觉隐喻设计师、Mid-century 商业插画师、超现实拼贴艺术家与编辑排版设计师。请根据用户提供的主题，创作一张具有统一系列感的编辑封面海报。整体视觉固定为：**现代极简编辑设计 × 1940s–1960s 复古商业插画人物 × 当代或未来事物 × 超现实视觉隐喻 × 大面积留白**。最终画面应像一本属于今天的独立杂志，请来一位 1958 年的商业插画师，描绘一个只有今天才会发生的话题。
+
+## 用户输入
+
+**主题 / 主标题：** {{editorial_cover_theme}}
+
+**副标题：** {{editorial_cover_subtitle}}
+
+**画幅比例：** {{editorial_cover_ratio}}
+
+**人物设定：** {{editorial_cover_cast}}
+
+**情感倾向：** {{editorial_cover_emotion}}
+
+除以上信息外，其余视觉设计全部由你自动完成，包括主题色彩、人物数量、年龄、职业、动作、镜头、服装、现代道具、超现实程度、文字层级、版式和构图。
+
+不要看到标题关键词就直接找对应图片。先理解主题真正想表达的核心观点、人物处境、行为变化或矛盾关系，再把它转化成一个**一眼能理解、第二眼才发现有点荒诞的视觉隐喻**。优先寻找“人的动作 + 一个核心物体 + 一个反常关系”，而不是关键词 + 图标。整张封面尽量只讲一个视觉故事：**一个主题、一个动作、一个核心道具、一个隐喻、一次时代错位**。如果某个元素不能帮助理解主题，就删除，不要为了丰富画面而堆东西。
+
+人物必须明显来自 1940s–1960s 美国商业广告、旧杂志或 Mid-century illustration 世界，具有真实的复古插画感、红润脸颊、经典发型、复古服装、旧广告人物气质，但**禁止每次都使用同一种漂亮女性脸、同一个男性脸或固定一男一女组合**。根据主题自动判断谁最适合承载内容，可以是年轻人、中年人、导师、学者、编辑、程序员、工程师、摄影师、主持人、旅行者、工作搭档、双女性、双男性、一男一女、单人或三人以内的小群像。人物的脸型、年龄、发型、职业气质、服装和镜头角度都应自然变化。系列统一感来自风格，不来自重复使用同一张脸。
+
+人物不能只是站着看镜头，必须正在发生动作，例如输入、写作、拍摄、驾驶、观察、调试、连接、组装、整理、主持、讲述、讨论、创造、操控或面对某个意外。双人或多人时必须有互动关系，而不是并排合照。人物也不必每次突出脸部，可以用侧脸、背影、局部身体、手部动作、俯视、仰视、回头、探出画面等方式变化构图。画面应该像故事发生到一半时被截取下来的一瞬间。
+
+核心趣味来自**时代错位**：复古人物正在使用属于今天甚至未来的事物，例如 laptop、AI、coding interface、digital human、camera、drone、rocket、modern car、database、terminal、server、knowledge graph、video editing interface、creative software 等，但现代物体必须服务主题，禁止为了科技感无意义堆叠。允许加入轻微超现实关系，例如人物进入屏幕、坐在巨型键盘上、驾驶火箭、从文件夹中开车出来、把代码当作实物操作、把知识或声音变成可触碰的东西。超现实要聪明、克制、略荒诞，通常只保留 **1 个主要隐喻 + 1 个辅助细节**。
+
+整体质感采用 **Mid-century advertising illustration + Vintage editorial collage + Surreal retro montage + Modern editorial design**。人物与插画带有 halftone dots、旧印刷颗粒、褪色油墨、轻微套色偏移、纸张纤维、screen print texture、磨损和不完全均匀的颜料覆盖，像真正从旧杂志中剪下来的插画，而不是光滑的现代数字绘画或 3D CG。背景保持白色、暖白、象牙白或奶油白，只允许轻微纸张纹理，不要画完整办公室、城市或复杂背景。
+
+版式核心是**大量留白 + 一小块视觉事件**。横版如 16:9、5:2、3:1 时，默认左侧约 65%–75% 用于标题、副标题和留白，右侧约 25%–35% 出现人物与视觉隐喻，明显左轻右重。尤其 5:2 和 3:1，要强化横向呼吸感，禁止主体居中、左右五五分、满版插画或把普通方图硬裁成长图。竖版则把标题放在上方或左上，人物放在下方或右下；方形也保持明显不对称。插画边缘禁止规则矩形、圆角卡片或相框，应使用 irregular feathered edges、faded ink edge、dry brush dissolve、paper collage erosion、halftone fade 等方式，让旧杂志油墨自然消失进白色背景。
+
+标题使用现代 Editorial Typography，与复古人物形成时代反差。中文可以使用高对比宋体、现代宋体、极简黑体或窄体黑体，英文可使用 Didone、Bodoni-like Serif、Editorial Serif 或 Condensed Sans。整张封面文字越少越好，优先只保留主标题和副标题，必要时可以有一行极小英文 editorial note，但不要自动加入卖点列表、功能图标、复杂标签或大量说明。主标题视觉优先级最高，可适当突出一个数字或关键词。
+
+色彩无需用户填写，根据主题和情感自动判断。背景保持白或暖白，人物和道具使用典型复古印刷色，例如 Tomato Red、Faded Coral、Mustard Yellow、Avocado Green、Olive Green、Teal、Powder Blue、Burgundy、Dusty Pink、Lavender、Warm Brown 等。通常控制为 **1 个主强调色 + 1–2 个辅助色 + 黑色文字 + 白色背景**，整张图主要颜色不超过 3–5 种。避免 AI 蓝紫渐变、霓虹灯、赛博朋克、发光芯片、AI 大脑、机器人头像、科技粒子、全息 HUD、大量漂浮 UI、代码雨等常见 AI 科技套路。即使主题是 AI、Coding、数字人或知识库，也优先表达“人在用科技做什么”，而不是“科技长什么样”。
+
+最终画面要做到：**第一眼看到标题，第二眼看到人物事件，第三眼发现这个复古人物正在做一件不属于那个年代的事情，第四眼理解这种时代错位为什么与主题有关。** 不要展示分析过程，不要解释视觉隐喻，不要给多个方案，不要做拼图，直接生成一张完整封面。始终坚持：**一个主题，一个动作，一个隐喻，一次时代错位，一张封面。**`,
+
+  en: `You are a top magazine-cover art director, visual-metaphor designer, mid-century commercial illustrator, surreal collage artist, and editorial typographer. From the user's theme, create one editorial cover poster that feels like a unified series. The visual system is fixed: **modern minimal editorial design × 1940s–1960s vintage commercial-illustration figures × contemporary or future objects × a surreal visual metaphor × generous white space**. The final image should feel like today's independent magazine, drawn by a 1958 commercial illustrator, about a topic that could only exist now.
+
+## User Input
+
+**Theme / Main Title:** {{editorial_cover_theme}}
+
+**Subtitle:** {{editorial_cover_subtitle}}
+
+**Aspect Ratio:** {{editorial_cover_ratio}}
+
+**Cast:** {{editorial_cover_cast}}
+
+**Emotional Tone:** {{editorial_cover_emotion}}
+
+Everything else is decided by you: palette, number of figures, age, occupation, action, camera, clothing, contemporary props, degree of surrealism, type hierarchy, layout, and composition.
+
+Do not illustrate title keywords as clip-art. First understand the real argument, the character's situation, the behavioral shift, or the contradiction—then turn it into a metaphor that is **readable at a glance and slightly absurd on the second look**. Prefer “a human action + one core object + one unnatural relationship,” not “keyword + icon.” Tell only one visual story: **one theme, one action, one hero prop, one metaphor, one anachronism**. Delete anything that does not help the theme.
+
+Figures must clearly belong to 1940s–1960s American advertising, vintage magazines, or mid-century illustration: rosy cheeks, period hair, vintage clothes, old-ad presence. **Never reuse the same pretty female face, the same male face, or a fixed man-and-woman pair.** Choose whoever best carries the idea: young or middle-aged, mentor, scholar, editor, programmer, engineer, photographer, host, traveler, work partners, two women, two men, a mixed pair, a single figure, or a small group of three or fewer. Faces, ages, hair, occupational vibe, clothes, and camera angle should change naturally. Series unity comes from style, not from repeating one face.
+
+Figures must be mid-action—typing, writing, shooting, driving, observing, debugging, connecting, assembling, sorting, hosting, narrating, discussing, creating, operating, or confronting a surprise—never just standing for the camera. Pairs and groups need interaction, not a lineup. Faces need not always dominate: profile, back view, cropped body, hands, high angle, low angle, a glance back, or a figure stepping out of frame are welcome. The image should feel like a story paused halfway through.
+
+The core pleasure is **anachronism**: vintage figures using things that belong to today or tomorrow—laptop, AI, coding interface, digital human, camera, drone, rocket, modern car, database, terminal, server, knowledge graph, video-editing UI, creative software—but only if the object serves the theme. Mild surrealism is allowed: entering a screen, sitting on a giant keyboard, driving a rocket, exiting a folder in a car, handling code as a physical object, making knowledge or sound tangible. Keep it smart, restrained, slightly absurd: usually **1 main metaphor + 1 supporting detail**.
+
+Finish as **Mid-century advertising illustration + vintage editorial collage + surreal retro montage + modern editorial design**. Halftone dots, old print grain, faded ink, slight misregistration, paper fiber, screen-print texture, wear, and uneven pigment—as if cut from a real old magazine, not smooth digital painting or 3D CG. Background stays white, warm white, ivory, or cream with only light paper texture. No full office, city, or complex set.
+
+Layout is **lots of white space + one small visual event**. For landscape 16:9, 5:2, 3:1: about 65%–75% left for title, subtitle, and air; 25%–35% right for figure and metaphor—clearly left-light, right-heavy. Especially on 5:2 and 3:1, emphasize horizontal breath; no centered subject, 50/50 split, full-bleed illustration, or a square image cropped into a banner. For portrait, title top or top-left, figure bottom or bottom-right; squares stay clearly asymmetrical. Illustration edges must not be a clean rectangle, rounded card, or picture frame. Use irregular feathered edges, faded ink, dry-brush dissolve, collage erosion, or halftone fade so vintage ink dissolves into white.
+
+Titles use modern editorial typography against vintage figures. Chinese may be high-contrast Song, modern Song, minimal Hei, or condensed Hei; English may be Didone, Bodoni-like serif, editorial serif, or condensed sans. As little type as possible: prefer title and subtitle only, plus one tiny English editorial note if needed. No feature lists, function icons, busy labels, or long captions. The main title has highest priority; one number or keyword may be emphasized.
+
+Do not ask the user for color. Infer palette from theme and emotion. Background white or warm white. Figures and props in vintage print colors: Tomato Red, Faded Coral, Mustard Yellow, Avocado Green, Olive Green, Teal, Powder Blue, Burgundy, Dusty Pink, Lavender, Warm Brown. Usually **1 accent + 1–2 supporting colors + black type + white ground**; no more than 3–5 main colors. Avoid AI purple-blue gradients, neon, cyberpunk, glowing chips, AI brains, robot heads, tech particles, holographic HUDs, floating UI, and code rain. Even for AI, coding, digital humans, or knowledge bases, show **what a person is doing with the technology**, not what the technology looks like.
+
+The finished cover should work like this: **first the title, then the human event, then the realization that this vintage person is doing something from the wrong era, then why that anachronism belongs to the theme.** Do not show analysis, do not explain the metaphor, do not offer multiple options, do not make a collage board. Output one complete cover. Always: **one theme, one action, one metaphor, one anachronism, one cover.**`
+};
+
+export const TEMPLATE_VISUAL_MEMORY_PAGE = {
+  cn: `将参考照片转译为一张 {{aspect_ratio}} 的编辑艺术书页，版式为：{{display_mode}}。作品不是照片滤镜或完整重绘，而是提取原图最值得留下的空间、物件、光线与色彩关系，再转化为摄影与抽象色块的两层记忆。
+
+记忆核心：{{memory_core}}
+重点保留：{{preserved_elements}}
+抽象程度：{{abstraction_level}}
+色块语言：{{block_language}}
+色彩策略：{{color_strategy}}
+输出比例：{{aspect_ratio}}
+
+摄影部分保留原始摄影，可根据构图适度裁切，但不得改变物件关系、增加人物或重新绘制照片。选择最能体现记忆核心的局部作为视觉中心。
+
+抽象部分使用少量大小悬殊的色块重组同一画面。以形态方向、位置、比例和色彩对应原图中的重要物件，不追求写实细节。允许透明叠印、轻微错位、边缘中断、软硬变化和局部留白。构图应不对称、重心明确，避免彩色几何拼图、低多边形、矢量图标和普通抽象壁纸。
+
+在最安静的留白区加入极少量文字。主文字：{{main_text}}；辅助文字：{{supporting_text}}；语言：{{text_language}}。
+
+文字必须来自画面中能够确认的空间、物件、动作、天气、光线或情绪，不虚构地点、日期、人物身份和事件。使用中小字号、纤细现代字体，辅助文字更小更淡；文字总面积不超过画面的 5%，不得压住主要色块。避免超大标题、描边、阴影、发光、随机英文和励志文案。
+
+摄影与抽象通过色彩与方向产生呼应，区域之间保留干净间隔。整体具有摄影艺术书、当代美术馆出版物和私人影像档案气质：安静、克制、精确，留白充分。`,
+
+  en: `Translate the reference photograph into an editorial artist-book page at {{aspect_ratio}}, using this presentation: {{display_mode}}. This is not a photo filter or a full redraw. Extract the spatial, object, light, and color relationships most worth keeping, then turn them into two layers of memory: photography and abstract color fields.
+
+Memory core: {{memory_core}}
+Preserve: {{preserved_elements}}
+Abstraction: {{abstraction_level}}
+Block language: {{block_language}}
+Color strategy: {{color_strategy}}
+Output ratio: {{aspect_ratio}}
+
+Keep the photographic portion as the original photograph. Modest cropping for composition is allowed, but do not change object relationships, add people, or repaint the photo. Choose the crop that best carries the memory core as the visual center.
+
+In the abstract portion, rebuild the same scene with a few color blocks of sharply unequal size. Let shape direction, position, proportion, and color correspond to important objects in the source. Do not chase realistic detail. Allow transparent overprinting, slight misregistration, broken edges, hard/soft contrast, and local whitespace. Keep the composition asymmetrical with a clear center of gravity. Avoid colorful geometric puzzles, low-poly, vector icons, and generic abstract wallpapers.
+
+Place a very small amount of type in the quietest leftover space. Main text: {{main_text}}. Supporting text: {{supporting_text}}. Language: {{text_language}}.
+
+All words must come from space, objects, actions, weather, light, or mood that can be confirmed in the picture. Do not invent places, dates, identities, or events. Use a small-to-medium thin modern typeface; supporting text smaller and paler. Type occupies no more than 5% of the page and must not cover primary color blocks. Avoid oversized titles, outlines, shadows, glow, random English, and motivational copy.
+
+Photography and abstraction should echo each other through color and direction, with a clean interval between zones. The whole page should feel like a photography artist book, a contemporary museum publication, and a private image archive: quiet, restrained, precise, with generous white space.`
+};
+
+export const TEMPLATE_MEMORY_EXHIBITION_TICKET = {
+  cn: `将参考照片转译为一张 {{aspect_ratio}} 竖版私人记忆展览票。采用上下布局：上部保留摄影记忆，下部呈现由同一照片生成的抽象、重制或概念化图像。不要出现“原始”“转译”“对比”等解释性标签，让两幅画面自行建立联系。
+
+展览主题：{{exhibition_theme}}
+说明文字：{{description}}
+记忆核心：{{memory_core}}
+转译方式：{{translation_mode}}
+转译重点：{{translation_focus}}
+抽象编号：{{serial_code}}
+输出比例：{{aspect_ratio}}
+
+上部约占 40%–45%，保留原始摄影质感，但允许大胆裁切。可以放大局部、截断边缘、减少背景，将最有视觉张力的对象、动作或空间关系作为主体。不得改变人物和物件关系，不增加照片中不存在的内容，不进行插画化重绘。
+
+下部约占 40%–45%，必须重新创作，不能重复照片、简单描摹或叠加滤镜。提取原图中的轮廓、比例、方向、材质、色彩与空间节奏，通过剪影、几何切片、专色色块、排线、网点、负形、比例放大、局部缺失和套印错位进行重组。保持高度抽象，但仍能通过结构和颜色感知它来自上方照片。转译方式以 {{translation_mode}} 为主。
+
+上下区域之间保留暖白纸张间隔。整张票面使用克制的虚线撕口、边缘打孔、票号区、细线和由原图纹理衍生的底纹，至少保留 30% 的安静留白。
+
+字体固定采用经典油墨活版印刷语言。中文标题使用窄长宋体铅字，横细竖重；说明文字使用旧式细宋体或印刷黑体；编号使用窄体工业无衬线或打字机字体。文字呈现轻微渗墨、浓淡不均、铅字磨损、纸面压痕和极轻套印偏移，但必须清晰准确。文字放在画面外侧留白区，不遮挡摄影和转译主体。
+
+色彩：{{color_strategy}}。禁止虚构地点、日期、机构、人物身份和票价；避免随机英文、发光字、书法字、商业活动门票模板及重度复古污渍。最终效果应像一张收藏级当代艺术展览票。`,
+
+  en: `Translate the reference photograph into a {{aspect_ratio}} portrait private-memory exhibition ticket. Use a stacked layout: photography kept above, and below it an abstract, remade, or conceptual image generated from the same photo. Do not add explanatory labels such as “original,” “translation,” or “comparison.” Let the two images connect on their own.
+
+Exhibition theme: {{exhibition_theme}}
+Caption: {{description}}
+Memory core: {{memory_core}}
+Translation mode: {{translation_mode}}
+Translation focus: {{translation_focus}}
+Serial code: {{serial_code}}
+Output ratio: {{aspect_ratio}}
+
+The upper band occupies about 40%–45%. Keep photographic texture, but crop boldly: enlarge a fragment, cut the edge, reduce background, and let the most tense object, action, or spatial relation become the subject. Do not change figure or object relationships, invent content absent from the photo, or redraw it as illustration.
+
+The lower band occupies about 40%–45% and must be newly made—not a repeat of the photo, a tracing, or a filter. Extract contour, proportion, direction, material, color, and spatial rhythm; recompose them through silhouette, geometric slices, spot-color fields, hatching, halftone, negative space, scale jumps, local omission, and print misregistration. Stay highly abstract, yet still readable as coming from the photograph above through structure and color. Lead with {{translation_mode}}.
+
+Keep a warm-white paper interval between the two zones. The whole ticket uses restrained dashed tear-offs, edge perforations, a serial area, hairlines, and a faint ground derived from the photo’s texture. Leave at least 30% quiet white space.
+
+Type is letterpress: a narrow high-contrast Song for the Chinese title; old thin Song or print Hei for the caption; condensed industrial sans or typewriter for the number. Allow slight ink bleed, uneven density, worn type, paper impression, and tiny misregistration—but keep every word sharp and accurate. Place type in the outer white margin; never cover the photograph or the translation.
+
+Color: {{color_strategy}}. Do not invent places, dates, institutions, identities, or ticket prices. Avoid random English, glowing type, calligraphy, commercial event-ticket templates, and heavy vintage stains. The result should feel like a collectible contemporary art exhibition ticket.`
+};
+
+export const TEMPLATE_MEMORY_VINYL_ALBUM = {
+  cn: `将参考照片转译为一张 1:2 竖版编辑作品，由上下两个等大的正方形组成。上部保留原始摄影，下部将同一段记忆转化为黑胶专辑，并放置在真实的 70 年代唱片店场景中。
+
+专辑名称：{{album_title}}
+注释文字：{{album_note}}
+目录编号：{{catalog_code}}
+文字语言：{{text_language}}
+封面风格：{{cover_style}}
+输出比例：1:2 竖构图。
+
+上半部分必须是正方形原始照片。由 AI 根据人物、动作、视线、空间结构和色彩锚点选择最佳裁切，可以大幅舍弃边缘和无关背景，但必须保留最有记忆价值的瞬间。保持摄影真实性，不重绘、不滤镜化、不改变人物身份、动作和物件关系。若原图带有边缘水印，优先通过合理裁切避开。
+
+下半部分为真实唱片店中的微距摄影。将原图转译为一张正方形黑胶专辑封面，不能只是把照片直接贴在封套上。提取原图的主体轮廓、动作方向、空间分区、标志性色彩和光线关系，通过几何重组、专色色块、丝网网点、局部剪影、光学折射或摄影拼贴重新设计。封面应与上图明显相关，但具备独立的唱片视觉语言。封面风格为 {{cover_style}}。
+
+专辑封套直立或微微倾斜，成为下部最清晰的焦点。封套具有真实纸张纤维、轻微环形磨损、细小划痕、褪色油墨、软化边角和局部擦痕，但保持被妥善收藏的状态。旁边一张黑色唱片正在老式唱机上旋转，可见沟槽、中心标签、转轴和唱臂。
+
+唱片店使用暖色钨丝灯、深色木架、成排唱片、透明保护袋和少量金属部件。采用微距镜头和浅景深，专辑封面清晰，其余环境形成浓郁柔和的虚化，呈现 70 年代模拟胶片颗粒与温暖色彩。
+
+标题使用 70 年代窄体无衬线、几何黑体或与图像文化背景相符的经典字体；小字字号克制、字距疏朗。所有文字必须拼写准确，只出现指定的专辑名、注释和编号。避免随机文字、虚构歌手姓名、现代电子设备、霓虹灯、干净的当代零售空间、廉价复古滤镜和过度破损。`,
+
+  en: `Translate the reference photograph into a 1:2 vertical editorial piece made of two equal squares. Keep the original photography on top. Below, turn the same memory into a vinyl album placed in a real 1970s record shop.
+
+Album title: {{album_title}}
+Note: {{album_note}}
+Catalog code: {{catalog_code}}
+Type language: {{text_language}}
+Cover style: {{cover_style}}
+Output ratio: 1:2 vertical.
+
+The upper square must be the original photograph. The AI chooses the best crop from figure, action, gaze, spatial structure, and color anchors. Edges and unused background may be cut away aggressively, but the most memorable instant must remain. Keep photographic truth: no redraw, no filter look, no change to identity, action, or object relationships. If the source has an edge watermark, crop it out when possible.
+
+The lower square is a macro photograph inside a real record shop. Translate the source into a square vinyl sleeve—do not paste the photo onto the jacket. Extract silhouette, action direction, spatial partitions, signature colors, and light, then redesign through geometric recombination, spot-color fields, screen-print dots, partial silhouettes, optical refraction, or photographic collage. The cover must clearly relate to the photo above while speaking its own album-cover language. Style: {{cover_style}}.
+
+The sleeve stands upright or slightly tilted as the sharpest focus below. Paper fiber, light ring wear, fine scratches, faded ink, softened corners, and local scuffs are allowed, but it should look well kept. Beside it, a black record turns on a vintage player: grooves, center label, spindle, and tonearm visible.
+
+The shop uses warm tungsten light, dark wood racks, rows of records, clear inner sleeves, and a few metal parts. Shoot with a macro lens and shallow depth of field: the album cover sharp, the rest a dense soft blur, with 1970s analog grain and warm color.
+
+Titles use 1970s condensed sans, geometric gothic, or a classic face matching the image’s culture. Small type stays restrained, with open tracking. Spell every word correctly; only the given title, note, and catalog code may appear. Avoid random type, invented artist names, modern electronics, neon, clean contemporary retail, cheap vintage filters, and heavy damage.`
 };
 
 export const DEFAULT_TEMPLATE_CONTENT = {
@@ -4147,5 +4339,109 @@ export const INITIAL_TEMPLATES_CONFIG = [
     language: ["cn", "en"],
     bestModel: "GPT-image-2",
     baseImage: "no_base_image"
+  },
+  {
+    id: "tpl_midcentury_editorial_cover",
+    name: {
+      cn: "Mid-century 超现实编辑封面",
+      en: "Mid-century Surreal Editorial Cover"
+    },
+    content: TEMPLATE_MIDCENTURY_EDITORIAL_COVER,
+    imageUrl: "https://s3.bmp.ovh/2026/08/21/mHmh3t89.jpg",
+    author: "Adrian Punk (@AdrianPunk115)",
+    selections: {
+      editorial_cover_theme: { cn: "前端部署工程师", en: "Front-end Deployment Engineer" },
+      editorial_cover_subtitle: { cn: "从零开始，掌握核心技能", en: "From zero, master the core skills" },
+      editorial_cover_ratio: { cn: "3:4", en: "3:4" },
+      editorial_cover_cast: { cn: "男性", en: "Male" },
+      editorial_cover_emotion: { cn: "理性", en: "Rational" }
+    },
+    tags: ["创意", "图表", "人物"],
+    language: ["cn", "en"],
+    bestModel: "GPT-image-2",
+    baseImage: "no_base_image",
+    source: [
+      { type: "image", url: "https://s3.bmp.ovh/2026/08/21/mHmh3t89.jpg", label: { cn: "示例封面", en: "Sample Cover" } }
+    ]
+  },
+  {
+    id: "tpl_visual_memory_page",
+    name: {
+      cn: "影像转译·编辑书页",
+      en: "Visual Memory · Editorial Page"
+    },
+    content: TEMPLATE_VISUAL_MEMORY_PAGE,
+    imageUrl: "https://s3.bmp.ovh/2026/08/21/Ew9m3ybt.png",
+    author: "@tanshilong",
+    selections: {
+      memory_core: { cn: "自动判断", en: "Auto" },
+      preserved_elements: { cn: "主要物件、空间结构与色彩关系", en: "Key objects, spatial structure, and color relationships" },
+      abstraction_level: { cn: "高度抽象但关系可辨", en: "Highly abstract, relationships still readable" },
+      block_language: { cn: "柔和大色域与少量锐利几何切面", en: "Soft large color fields with a few sharp geometric cuts" },
+      color_strategy: { cn: "从原图提取2–4种低饱和主色，并保留一个鲜明强调色", en: "Pull 2–4 low-saturation primaries from the photo, keep one vivid accent" },
+      aspect_ratio: { cn: "3:4", en: "3:4" },
+      main_text: { cn: "根据原图内容生成2–6字的简约短语", en: "Generate a 2–6 character spare phrase from the photo" },
+      supporting_text: { cn: "根据画面生成一句克制、具体的记忆描述，也可以省略", en: "A restrained, specific memory line from the picture, or omit" },
+      text_language: { cn: "跟随用户使用的语言", en: "Follow the user's language" },
+      display_mode: { cn: "原图在上，抽象色块转译在下", en: "Photo on top, abstract translation below" }
+    },
+    tags: ["摄影", "创意", "图表"],
+    language: ["cn", "en"],
+    bestModel: "GPT-image-2",
+    baseImage: "recommend_base_image",
+    source: [
+      { type: "image", url: "https://s3.bmp.ovh/2026/08/21/Ew9m3ybt.png", label: { cn: "示例书页", en: "Sample Page" } }
+    ]
+  },
+  {
+    id: "tpl_memory_exhibition_ticket",
+    name: {
+      cn: "影像转译·展览票",
+      en: "Visual Memory · Exhibition Ticket"
+    },
+    content: TEMPLATE_MEMORY_EXHIBITION_TICKET,
+    imageUrl: "https://s3.bmp.ovh/2026/08/21/3LqHB8VJ.png",
+    author: "@tanshilong",
+    selections: {
+      exhibition_theme: { cn: "根据照片生成2–8字的含蓄主题", en: "A 2–8 character understated theme from the photo" },
+      description: { cn: "根据画面真实内容生成一句简短描述", en: "One short caption from what the picture actually shows" },
+      memory_core: { cn: "自动提炼物件、人物关系、动作、空间或光线", en: "Auto-extract objects, relations, action, space, or light" },
+      translation_mode: { cn: "抽象重制", en: "Abstract remake" },
+      translation_focus: { cn: "自动选择3–5个最具识别度的元素", en: "Auto-select 3–5 of the most recognizable elements" },
+      serial_code: { cn: "NO. 02", en: "NO. 02" },
+      aspect_ratio: { cn: "3:4", en: "3:4" },
+      color_strategy: { cn: "从原图提取2–4种低饱和专色", en: "Extract 2–4 low-saturation spot colors from the photo" }
+    },
+    tags: ["摄影", "创意", "图表"],
+    language: ["cn", "en"],
+    bestModel: "GPT-image-2",
+    baseImage: "recommend_base_image",
+    source: [
+      { type: "image", url: "https://s3.bmp.ovh/2026/08/21/3LqHB8VJ.png", label: { cn: "示例外票", en: "Sample Ticket" } }
+    ]
+  },
+  {
+    id: "tpl_memory_vinyl_album",
+    name: {
+      cn: "影像转译·黑胶专辑",
+      en: "Visual Memory · Vinyl Album"
+    },
+    content: TEMPLATE_MEMORY_VINYL_ALBUM,
+    imageUrl: "https://s3.bmp.ovh/2026/08/21/OoIam6Cd.png",
+    author: "@tanshilong",
+    selections: {
+      album_title: { cn: "根据图像核心生成2–5个英文单词", en: "2–5 English words from the image’s core" },
+      album_note: { cn: "根据画面生成一句简短英文描述", en: "One short English line from the picture" },
+      catalog_code: { cn: "自动生成简洁的虚构编号", en: "Auto-generate a short fictional catalog code" },
+      text_language: { cn: "优先英文；若图像具有明确地域语言，则使用对应语言", en: "English first; use a regional language if the image clearly belongs to one" },
+      cover_style: { cn: "70年代现代主义专辑设计", en: "1970s modernist album design" }
+    },
+    tags: ["摄影", "创意", "产品"],
+    language: ["cn", "en"],
+    bestModel: "GPT-image-2",
+    baseImage: "recommend_base_image",
+    source: [
+      { type: "image", url: "https://s3.bmp.ovh/2026/08/21/OoIam6Cd.png", label: { cn: "示例专辑", en: "Sample Album" } }
+    ]
   }
 ];

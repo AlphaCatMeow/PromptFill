@@ -56,6 +56,20 @@ export const SettingsView = ({
   
   const updateLogs = language === 'cn' ? [
     {
+      version: 'V1.1.4',
+      date: '2026年8月21日',
+      time: '11:58 PM',
+      title: '影像转译模版 · 发现页加载优化',
+      type: 'UPDATE',
+      content: [
+        '新增 4 套官方模版：Mid-century 超现实编辑封面、影像转译·编辑书页、影像转译·展览票、影像转译·黑胶专辑。',
+        '发现页瀑布流改为按需加载图片，占位比例锁定，减少首屏卡顿。',
+        '右下角显示当前模版总数（官方 + 用户）。',
+        '修复从预览进入模版后，首页按钮无法返回发现页的问题。',
+        '下线独立视频编辑器、知识库文章与 UI Test 页面（视频模版仍保留）。',
+      ]
+    },
+    {
       version: 'V1.1.3',
       date: '2026年4月21日',
       time: '10:00 PM',
@@ -349,6 +363,20 @@ export const SettingsView = ({
       ]
     }
   ] : [
+    {
+      version: 'V1.1.4',
+      date: 'Aug 21, 2026',
+      time: '11:58 PM',
+      title: 'Visual Memory Templates · Discovery Loading',
+      type: 'UPDATE',
+      content: [
+        'Added 4 official templates: Mid-century Surreal Editorial Cover, Visual Memory Editorial Page, Exhibition Ticket, and Vinyl Album.',
+        'Discovery masonry now lazy-loads images with locked placeholders, reducing first-load jank.',
+        'Footer shows total template count (official + user).',
+        'Fix: Home no longer stays on /explore after entering a template from preview.',
+        'Removed the standalone video editor, knowledge articles, and UI Test page (video templates remain).',
+      ]
+    },
     {
       version: 'V1.1.3',
       date: 'Apr 21, 2026',
